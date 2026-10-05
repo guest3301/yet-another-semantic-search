@@ -1,0 +1,7 @@
+requests
+bs4
+pymupdf
+faiss-cpu
+numpy
+fastembed
+curl_cffi
