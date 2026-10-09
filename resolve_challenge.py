@@ -7,7 +7,7 @@ from curl_cffi import requests
 
 
 class ResolveChallenge:
-    def __init__(self, domain, _type):
+    def __init__(self, domain=str, _type=str):
         self.domain = domain
         self._type = _type
         self.request = requests.Session()
@@ -36,6 +36,22 @@ class ResolveChallenge:
         if (res.status_code == 200):
             return dict(hcdn=res.cookies['hcdn'])
 
+    def test_request(self, cookie):
+        """
+        takes hcdn {cookie} as an args \n
+        returns status_code
+        """
+        res = requests.get(self.domain, cookies=cookie, headers=self.headers)
+        return res.status_code
+
+    def cache_cookie(self):
+        """
+        TODO: We simply cache the cookie and use it, if that returns 403
+        we proceed.
+
+        """
+        return 
+
 
 if __name__ == '__main__':
     DOMAIN = 'https://ocp.edu.in'
@@ -46,6 +62,8 @@ if __name__ == '__main__':
     if cookie:
         print("SUCCESS! Challenge bypassed successfully.")
         print("Validated cookie: ", cookie)
+
+    print(challenge.test_request(cookie))
 
 # this proves that the cjs is hashed with sha256.
 # print(sha256('WInbH7tR3gK3mr1npayR'.encode()).hexdigest() == 'bafd70c022055ee3926b279ddf06218e5ae3246f663f5ef814d86aaa09be690f')
