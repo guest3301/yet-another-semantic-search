@@ -15,7 +15,7 @@ request = requests.Session()
 
 visited_links = set()
 results = list()
-out = open("results.json", "a")
+out = open("response.json", "a")
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(filename='scrape.log', level=logging.INFO)
@@ -44,6 +44,10 @@ def crawl_page(URL=URL):
             continue
         main = get_main_content_from_page(link)
         logger.info(f"Got main content")
+        # TODO:
+        # Make sure to remove excessive 
+        # 1. newlines
+        # 2. admin<date:time> format, since the target website is based on wordpress.
         results.append({"url": link, "short_text": elem.text, "text": main})
         visited_links.add(link)
         logger.info("going for next crawl")
